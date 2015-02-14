@@ -1,6 +1,6 @@
 {
-  "name": 			        "Simpl3s",
-  "description": 		    "Small, fast, quick and easy node.js based HTTP file flinger.",
+  "name": 			        "Simples",
+  "description": 		    "Simple Node.js based file flinger.",
   "scripts": {
     "start":				"node server"
   },
@@ -9,6 +9,9 @@
     "node":					"*"
   },
   "dependencies": {
-    "node-static":			"*"
+    "clean-css":            "*",
+    "html-minifier":        "*",
+    "node-static":          "*",
+    "uglify-js":            "*"
   }
 }
