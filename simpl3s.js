@@ -1,43 +1,19 @@
 /***************************************************
-*                       SiMpL3S
-****************************************************
-*
-*   About:  Simple node based HTTP file flinger
-*
-****************************************************/
+ *                       SiMpL3S
+ ****************************************************
+ *
+ *   About:  Simple node based HTTP file flinger
+ *
+ ****************************************************/
 'use strict';
 
-var port = process.env.PORT || process.env.port || 8081,
-    minify = require('html-minifier').minify,
+var minify = require('html-minifier').minify,
     staticFiles = require('node-static'),
     cleanCSS = require('clean-css'),
     uglify = require('uglify-js'),
     zlib = require('zlib'),
     fs = require('fs'),
     fileServer;
-
-
-// Setup static file server
-fileServer = new staticFiles.Server('./public', {
-    gzip:		true,
-    serverInfo:	'S'
-});
-
-
-// Listen for HTTP requests
-require('http').createServer(function (req, res) {
-    if (req.url === '/') {
-        req.url = '/index.html'
-    }
-
-    try {
-        fileServer.serve(req, res);
-    } catch (e) {
-        console.log(e);
-        res.writeHead(404);
-        res.end('404');
-    }
-}).listen(port);
 
 
 // Find and gzip static contents
@@ -162,4 +138,41 @@ var gzipStaticContents = (function () {
 } ());
 
 
-console.log('SiMpL3S now listening on port ' + port);
+// Public API
+module.exports = function (config) {
+    var config = config || {},
+        port = process.env.PORT || process.env.port || config.port || 8081,
+        path = config.path || './public';
+
+
+    // Init instance
+    var init = function () {
+        // Setup static file server
+        fileServer = new staticFiles.Server(path, {
+            gzip:		config.gzip || true,
+            serverInfo:	'S'
+        });
+
+
+        // Listen for HTTP requests
+        require('http').createServer(function (req, res) {
+            if (req.url === '/') {
+                req.url = '/index.html'
+            }
+
+            try {
+                fileServer.serve(req, res);
+            } catch (e) {
+                console.log(e);
+                res.writeHead(404);
+                res.end('404');
+            }
+        }).listen(port);
+
+        console.log('SiMpL3S now listening on port ' + port);
+    };
+
+    return {
+        init: init
+    };
+};

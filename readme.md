@@ -7,6 +7,21 @@ Small, fast, quick and easy node.js file flinger.
 * CSS/HTML/JS files are automatically minified and gzipped
 * JSON/TXT/XML file are automatically gzipped
 
+## Quick usage
+    var simpl3s = require('simpl3s');
+
+    simpl3s().init();
+
+## Sample configuration
+    var simpl3s = require('simpl3s'),
+        config = {
+            gzip: true,
+            port: 8081,
+            path: './public'
+        };
+
+    simpl3s(config).init();
+
 ## Installation
 
 #### npm
@@ -17,7 +32,7 @@ Small, fast, quick and easy node.js file flinger.
 * CD to the freezing-tribble directory
 * sudo npm install
 * sudo npm update
-* node server.js
+* node simpl3s.js
 
 #### AWS EB
 * Create a zip archive containing this app (ensure package.json is in the root)
