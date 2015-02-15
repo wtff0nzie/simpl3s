@@ -24,7 +24,7 @@ Small, fast, quick and easy node.js file flinger with a silly name.
     simpl3s.init(config);
 
 ## Notes
-Port configuration can be ignored when a cloud environment is detected.
+Explicit port configuration will be ignored if a cloud environment is detected. Defaults to 8081 when no port is specified.
 
 ## Installation
 
