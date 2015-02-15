@@ -7,17 +7,15 @@
  ****************************************************/
 'use strict';
 
-var minify = require('html-minifier').minify,
-    staticFiles = require('node-static'),
-    cleanCSS = require('clean-css'),
-    uglify = require('uglify-js'),
-    zlib = require('zlib'),
-    fs = require('fs'),
-    fileServer;
+var fs = require('fs');
 
 
 // Find and gzip static contents
-var gzipStaticContents = (function () {
+var gzipStaticContents = function (path, minify) {
+    var minify = require('html-minifier').minify,
+        cleanCSS = require('clean-css'),
+        uglify = require('uglify-js'),
+        zlib = require('zlib');
 
     // Sync file read
     var readFileSync = function (fileName) {
@@ -28,7 +26,7 @@ var gzipStaticContents = (function () {
     // Sync file write
     var writeFileSync = function (fileName, contents) {
         fs.writeFileSync(fileName, contents);
-    }
+    };
 
 
     // Delete file
@@ -70,7 +68,7 @@ var gzipStaticContents = (function () {
                 if (canCompress.indexOf(extension) > -1) {
 
                     // Minify HTML, CSS,  JS
-                    if (extension === 'css' || extension === 'js' || extension.indexOf('htm') > -1) {
+                    if (minify === true && (extension === 'css' || extension === 'js' || extension.indexOf('htm') > -1)) {
                         source = readFileSync(currentFile);
 
                         if (extension === 'js') {
@@ -108,10 +106,9 @@ var gzipStaticContents = (function () {
 
     // Recursive file / folder dance, do stuff
     var traverseFileSystem = function (currentPath, func) {
-        var files = fs.readdirSync(currentPath),
-            stats, key;
+        var files = fs.readdirSync(currentPath);
 
-        files.forEach(function (file, index) {
+        files.forEach(function (file) {
             var currentFile = currentPath + '/' + file;
 
             fs.stat(currentFile, function(err, stat) {
@@ -133,25 +130,31 @@ var gzipStaticContents = (function () {
 
     // Lets not kill the server on start-up
     try {
-        compressStaticAssets('./public/');
+        compressStaticAssets(path);
     } catch(ignore) {}
-} ());
+};
 
 
-// Public API
-module.exports = function (config) {
+// Start up new server
+var server = function (config) {
     var config = config || {},
         port = process.env.PORT || process.env.port || config.port || 8081,
         path = config.path || './public';
 
 
+    config.minify = config.minify || true;
+
+    if (config.gzip !== false) {
+        gzipStaticContents(config.gzip, config.minify)
+    }
+
     // Init instance
     var init = function () {
-        // Setup static file server
-        fileServer = new staticFiles.Server(path, {
-            gzip:		config.gzip || true,
-            serverInfo:	'S'
-        });
+        var staticFiles = require('node-static'),
+            fileServer = new staticFiles.Server(path, {
+                gzip        : config.gzip || true,
+                serverInfo  : 'S'
+            });
 
 
         // Listen for HTTP requests
@@ -176,3 +179,7 @@ module.exports = function (config) {
         init: init
     };
 };
+
+
+// Public API
+module.exports = server;
