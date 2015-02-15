@@ -175,7 +175,8 @@ var server = function () {
     };
 
     return {
-        init: init
+        init    : init,
+        serve   : init
     };
 };
 
