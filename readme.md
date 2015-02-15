@@ -1,16 +1,17 @@
 # Simpl3s
 
-Small, fast, quick and easy node.js file flinger.
+Small, fast, quick and easy node.js file flinger with a silly name.
 
 ## Features
-* Small
+* Small static file HTTP server
+* Fast!
 * CSS/HTML/JS files are automatically minified and gzipped
 * JSON/TXT/XML file are automatically gzipped
+* Silly name
 
 ## Quick usage
-    var simpl3s = require('simpl3s');
+    require('simpl3s').init();
 
-    simpl3s().init();
 
 ## Sample configuration
     var simpl3s = require('simpl3s'),
@@ -20,7 +21,10 @@ Small, fast, quick and easy node.js file flinger.
             path: './public'
         };
 
-    simpl3s(config).init();
+    simpl3s.init(config);
+
+## Notes
+Port configuration can be ignored when a cloud environment is detected.
 
 ## Installation
 

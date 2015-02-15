@@ -21,7 +21,7 @@
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
     "main": "./simpl3s",
-    "version": "0.2.5",
+    "version": "0.2.7",
     "engines": {
         "node": ">= 0.4.1"
     },

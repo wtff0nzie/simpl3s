@@ -7,15 +7,14 @@
  ****************************************************/
 'use strict';
 
-var fs = require('fs');
-
 
 // Find and gzip static contents
 var gzipStaticContents = function (path) {
     var minify = require('html-minifier').minify,
         cleanCSS = require('clean-css'),
         uglify = require('uglify-js'),
-        zlib = require('zlib');
+        zlib = require('zlib'),
+        fs = require('fs');
 
 
     // Sync file read
@@ -137,23 +136,24 @@ var gzipStaticContents = function (path) {
 
 
 // Start up new server
-var server = function (config) {
-    var config = config || {},
-        port = process.env.PORT || process.env.port || config.port || 8081,
-        path = config.path || './public';
+var server = function () {
 
-
-    if (config.gzip !== false) {
-        gzipStaticContents(path, config.minify || true);
-    }
-
-    // Init instance
-    var init = function () {
+    var init = function (config) {
         var staticFiles = require('node-static'),
-            fileServer = new staticFiles.Server(path, {
-                gzip        : config.gzip || true,
-                serverInfo  : 'S'
-            });
+            config = config || {},
+            port = process.env.PORT || process.env.port || config.port || 8081,
+            path = config.path || './public',
+            fileServer;
+
+
+        if (config.gzip !== false) {
+            gzipStaticContents(path, config.minify || true);
+        }
+
+        fileServer = new staticFiles.Server(path, {
+            gzip        : config.gzip || true,
+            serverInfo  : 'S'
+        });
 
 
         // Listen for HTTP requests
@@ -181,4 +181,4 @@ var server = function (config) {
 
 
 // Public API
-module.exports = server;
+module.exports = server();
