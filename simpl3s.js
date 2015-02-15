@@ -11,11 +11,12 @@ var fs = require('fs');
 
 
 // Find and gzip static contents
-var gzipStaticContents = function (path, minify) {
+var gzipStaticContents = function (path) {
     var minify = require('html-minifier').minify,
         cleanCSS = require('clean-css'),
         uglify = require('uglify-js'),
         zlib = require('zlib');
+
 
     // Sync file read
     var readFileSync = function (fileName) {
@@ -68,7 +69,7 @@ var gzipStaticContents = function (path, minify) {
                 if (canCompress.indexOf(extension) > -1) {
 
                     // Minify HTML, CSS,  JS
-                    if (minify === true && (extension === 'css' || extension === 'js' || extension.indexOf('htm') > -1)) {
+                    if (extension === 'css' || extension === 'js' || extension.indexOf('htm') > -1) {
                         source = readFileSync(currentFile);
 
                         if (extension === 'js') {
@@ -77,8 +78,8 @@ var gzipStaticContents = function (path, minify) {
                             source = new cleanCSS().minify(source).styles;
                         } else {
                             source = minify(source, {
-                                collapseWhitespace: true,
-                                removeComments: true
+                                collapseWhitespace  : true,
+                                removeComments      : true
                             });
                         }
 
@@ -92,7 +93,7 @@ var gzipStaticContents = function (path, minify) {
                         compressAsset(outputFileName, currentFile);
                     }, 99);
 
-                    // Clean up
+                    // Clean up tmp files
                     if (deleteTemp) {
                         setTimeout(function () {
                             deleteFile(outputFileName);
@@ -142,10 +143,8 @@ var server = function (config) {
         path = config.path || './public';
 
 
-    config.minify = config.minify || true;
-
     if (config.gzip !== false) {
-        gzipStaticContents(config.gzip, config.minify)
+        gzipStaticContents(path, config.minify || true);
     }
 
     // Init instance
