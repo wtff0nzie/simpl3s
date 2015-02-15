@@ -1,17 +1,30 @@
 {
-  "name": 			        "Simples",
-  "description": 		    "Simple Node.js based file flinger.",
-  "scripts": {
-    "start":				"node server"
+  "name": "simpl3s",
+  "description": "Simple Node.js based file flinger.",
+  "url": "https://github.com/wtff0nzie/simpl3s",
+  "keywords": [
+    "file",
+    "server"
+  ],
+  "author": {
+    "name": "wtff0nzie",
+    "email": "stopbeing@deziddon.com"
   },
-  "version":			    "0.0.0-1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wtff0nzie/simpl3s"
+  },
+  "scripts": {
+    "start": "node server"
+  },
+  "version": "0.2.1",
   "engines": {
-    "node":					"*"
+    "node": ">= 0.4.1"
   },
   "dependencies": {
-    "clean-css":            "*",
-    "html-minifier":        "*",
-    "node-static":          "*",
-    "uglify-js":            "*"
+    "clean-css": "*",
+    "html-minifier": "*",
+    "node-static": "*",
+    "uglify-js": "*"
   }
 }
