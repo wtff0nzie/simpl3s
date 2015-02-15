@@ -9,6 +9,9 @@ Small, fast, quick and easy node.js file flinger.
 
 ## Installation
 
+#### npm
+* npm install simpl3s
+
 #### Localhost
 * Ensure node.js is installed (http://nodejs.org)
 * CD to the freezing-tribble directory
