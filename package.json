@@ -4,7 +4,9 @@
     "url": "https://github.com/wtff0nzie/simpl3s",
     "keywords": [
         "file",
-        "server"
+        "server",
+        "http",
+        "http1/1"
     ],
     "author": {
         "name": "wtff0nzie",
@@ -21,14 +23,11 @@
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
     "main": "./simpl3s",
-    "version": "0.2.7",
+    "version": "0.2.9",
     "engines": {
-        "node": ">= 0.4.1"
+        "node": ">= 0.12"
     },
     "dependencies": {
-        "clean-css": "*",
-        "html-minifier": "*",
-        "node-static": "*",
-        "uglify-js": "*"
+        "smushers": "*"
     }
 }
