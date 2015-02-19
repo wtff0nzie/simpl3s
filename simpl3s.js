@@ -77,7 +77,7 @@ var serveFile = function (req, res) {
 };
 
 
-// Public APIg
+// Public API
 var server = function (cfg) {
     setConfig(cfg);
 
@@ -86,6 +86,7 @@ var server = function (cfg) {
         init        : init,
         server      : init,
         speedify    : minify.crush,
+        stats       : stats,
         minifiers   : minify
     };
 };
