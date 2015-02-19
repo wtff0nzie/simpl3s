@@ -6,7 +6,7 @@ Small, fast, quick and easy node.js file flinger with a silly name.
 * Small static file HTTP server
 * Fast!
 * CSS/HTML/JS files are automatically minified and gzipped
-* JSON/TXT/XML file are automatically gzipped
+* JSON/SVG/TXT/XML file are automatically gzipped
 * Silly name
 
 ## Quick usage
