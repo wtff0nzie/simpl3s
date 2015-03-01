@@ -86,6 +86,7 @@ var server = function (cfg) {
         init        : init,
         server      : init,
         serveFile   : serveFile,
+        set         : setConfig,
         speedify    : minify.crush,
         stats       : stats,
         minifiers   : minify
