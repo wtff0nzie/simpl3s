@@ -1,18 +1,28 @@
 /***************************************************
-*                       SiMpL3S
-****************************************************
-*
-*   About:  Simple HTTP file flinger
-*
-****************************************************/
+ *                       SiMpL3S
+ ****************************************************
+ *
+ *   About:  Simple HTTP file flinger
+ *
+ ****************************************************/
 'use strict';
 
 var staticFiles = require('node-static'),
     minify = require('smushers'),
+    fs = require('fs'),
+    optExists = {},
     config = {},
     fileServer,
-    stats;
+    stats,
+    imgs;
 
+
+imgs = {
+    'gif'   : true,
+    'jpeg'  : true,
+    'jpg'   : true,
+    'png'   : true
+};
 
 // Apply config with sensible defaults
 var setConfig = function (cfg) {
@@ -42,6 +52,12 @@ stats = {
 };
 
 
+// Return stats
+var getStats = function () {
+    return JSON.parse(JSON.stringify(stats));
+};
+
+
 // Init standalone server
 var init = function (cfg) {
     setConfig(cfg);
@@ -61,18 +77,52 @@ var init = function (cfg) {
 
 // Serve a single file
 var serveFile = function (req, res) {
+    var optimisedFilename,
+        fileExtension,
+        fileName;
+
+    var serve = function () {
+        try {
+            fileServer.serve(req, res);
+            stats.hits++;
+        } catch (e) {
+            console.log(e);
+            res.writeHead(404);
+            res.end('404');
+            stats.errors++;
+        }
+    };
+
     if (req.url === '/') {
         req.url = '/index.html'
     }
 
-    try {
-        fileServer.serve(req, res);
-        stats.hits++;
-    } catch (e) {
-        console.log(e);
-        res.writeHead(404);
-        res.end('404');
-        stats.errors++;
+    fileName = req.url.split('.');
+    fileExtension = fileName[fileName.length - 1].toLowerCase();
+
+    // Handle non image assets
+    if (!imgs[fileExtension]) {
+        serve();
+        return;
+    }
+
+    // Handle images
+    fileName.pop();
+    optimisedFilename = fileName.join('.') + '.opt.' + fileExtension;
+
+    // An optimised version of this file exists, serve it
+    if (optExists[req.url]) {
+        req.url = optimisedFilename;
+        serve();
+    } else if (imgs[fileExtension]) {
+        // Does optimised version exist?
+        fs.readFile(config.path + optimisedFilename, function(err) {
+            if (!err) {
+                optExists[req.url] = 1;
+                req.url = optimisedFilename;
+            }
+            serve();
+        });
     }
 };
 
@@ -88,7 +138,7 @@ var server = function (cfg) {
         serveFile   : serveFile,
         set         : setConfig,
         speedify    : minify.crush,
-        stats       : stats,
+        stats       : getStats,
         minifiers   : minify
     };
 };
