@@ -23,7 +23,7 @@
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
     "main": "./simpl3s",
-    "version": "0.3.8",
+    "version": "0.3.9",
     "engines": {
         "node": ">= 0.12"
     },

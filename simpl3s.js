@@ -31,15 +31,23 @@ var setConfig = function (cfg) {
     }
 
     config = {
-        port    : (process.env.PORT || process.env.port || cfg.port || config.port || 8081),
+        port    : (process.env.PORT || process.env.port || cfg.port || config.port || 8080),
         path    : (cfg.path || config.path || './public'),
-        minify  : (cfg.minify || config.minify || true),
+        minify  : (config.minify || true),
         header  : (cfg.header || config.header || 'S'),
-        gzip    : (cfg.gzip || config.gzip || true)
+        gzip    : (config.gzip || true)
     };
 
+    if (cfg.gzip === false) {
+        config.gzip = false;
+    }
+
+    if (cfg.minify === false) {
+        config.minify = false;
+    }
+
     fileServer = new staticFiles.Server(config.path, {
-        gzip        : config.gzip || true,
+        gzip        : config.gzip,
         serverInfo  : config.header
     });
 };
