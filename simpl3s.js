@@ -66,43 +66,27 @@ var getStats = function () {
 };
 
 
-// Init standalone server
-var init = function (cfg) {
-    setConfig(cfg);
-
-    if (config.gzip !== false) {
-        minify.crush(config.path);
-    }
-
-    // Listen for HTTP requests
-    require('http').createServer(function (req, res) {
-        serveFile(req, res);
-    }).listen(config.port);
-
-    console.log('SiMpL3S now listening on port ' + config.port);
-};
-
-
 // Serve a single file
 var serveFile = function (req, res) {
     var optimisedFilename,
         fileExtension,
-        fileName;
+        fileName,
+        serve;
 
-    var serve = function () {
+    serve = function () {
         try {
             fileServer.serve(req, res);
-            stats.hits++;
+            stats.hits = stats.hits + 1;
         } catch (e) {
             console.log(e);
             res.writeHead(404);
             res.end('404');
-            stats.errors++;
+            stats.errors = stats.errors + 1;
         }
     };
 
     if (req.url === '/') {
-        req.url = '/index.html'
+        req.url = '/index.html';
     }
 
     fileName = req.url.split('.');
@@ -124,7 +108,7 @@ var serveFile = function (req, res) {
         serve();
     } else if (imgs[fileExtension]) {
         // Does optimised version exist?
-        fs.readFile(config.path + optimisedFilename, function(err) {
+        fs.readFile(config.path + optimisedFilename, function (err) {
             if (!err) {
                 optExists[req.url] = 1;
                 req.url = optimisedFilename;
@@ -132,6 +116,23 @@ var serveFile = function (req, res) {
             serve();
         });
     }
+};
+
+
+// Init standalone server
+var init = function (cfg) {
+    setConfig(cfg);
+
+    if (config.gzip !== false) {
+        minify.crush(config.path);
+    }
+
+    // Listen for HTTP requests
+    require('http').createServer(function (req, res) {
+        serveFile(req, res);
+    }).listen(config.port);
+
+    console.log('SiMpL3S now listening on port ' + config.port);
 };
 
 
