@@ -32,7 +32,7 @@ var setConfig = function (cfg) {
 
     config = {
         port    : (process.env.PORT || process.env.port || cfg.port || config.port || 8080),
-        path    : (cfg.path || config.path || './public'),
+        path    : (cfg.path || config.path || './www'),
         minify  : (config.minify || true),
         header  : (cfg.header || config.header || 'S'),
         gzip    : (config.gzip || true)
