@@ -23,12 +23,11 @@
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
     "main": "./simpl3s",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "engines": {
-        "node": ">= 0.12"
+        "node": ">= 6"
     },
     "dependencies": {
-        "node-static": "*",
-        "smushers": ">= 0.4.2"
+        "node-static": "*"
     }
 }

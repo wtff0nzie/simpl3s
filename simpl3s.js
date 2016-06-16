@@ -8,7 +8,6 @@
 'use strict';
 
 var staticFiles = require('node-static'),
-    minify = require('smushers'),
     fs = require('fs'),
     optExists = {},
     config = {},
@@ -17,6 +16,7 @@ var staticFiles = require('node-static'),
     imgs;
 
 
+//    minify = require('smushers'),
 imgs = {
     'gif'   : true,
     'jpeg'  : true,
@@ -124,7 +124,7 @@ var init = function (cfg) {
     setConfig(cfg);
 
     if (config.gzip !== false) {
-        minify.crush(config.path);
+        //minify.crush(config.path);
     }
 
     // Listen for HTTP requests
@@ -146,9 +146,7 @@ var server = function (cfg) {
         server      : init,
         serveFile   : serveFile,
         set         : setConfig,
-        speedify    : minify.crush,
-        stats       : getStats,
-        minifiers   : minify
+        stats       : getStats
     };
 };
 
