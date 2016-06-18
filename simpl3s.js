@@ -8,6 +8,7 @@
 'use strict';
 
 var staticFiles = require('node-static'),
+    minify = require('smushers'),
     fs = require('fs'),
     optExists = {},
     config = {},
@@ -16,7 +17,6 @@ var staticFiles = require('node-static'),
     imgs;
 
 
-//    minify = require('smushers'),
 imgs = {
     'gif'   : true,
     'jpeg'  : true,
@@ -25,7 +25,7 @@ imgs = {
 };
 
 // Apply config with sensible defaults
-var setConfig = function (cfg) {
+var setConfig = (cfg) => {
     if (!cfg) {
         cfg = {};
     }
@@ -61,19 +61,19 @@ stats = {
 
 
 // Return stats
-var getStats = function () {
+var getStats = () => {
     return JSON.parse(JSON.stringify(stats));
 };
 
 
 // Serve a single file
-var serveFile = function (req, res) {
+var serveFile = (req, res) => {
     var optimisedFilename,
         fileExtension,
         fileName,
         serve;
 
-    serve = function () {
+    serve = () => {
         try {
             fileServer.serve(req, res);
             stats.hits = stats.hits + 1;
@@ -120,11 +120,11 @@ var serveFile = function (req, res) {
 
 
 // Init standalone server
-var init = function (cfg) {
+var init = (cfg) => {
     setConfig(cfg);
 
     if (config.gzip !== false) {
-        //minify.crush(config.path);
+        minify.crush(config.path);
     }
 
     // Listen for HTTP requests
@@ -137,7 +137,7 @@ var init = function (cfg) {
 
 
 // Public API
-var server = function (cfg) {
+var server = (cfg) => {
     setConfig(cfg);
 
     return {
@@ -146,7 +146,9 @@ var server = function (cfg) {
         server      : init,
         serveFile   : serveFile,
         set         : setConfig,
-        stats       : getStats
+        speedify    : minify.crush,
+        stats       : getStats,
+        minifiers   : minify
     };
 };
 
