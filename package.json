@@ -28,6 +28,6 @@
     },
     "dependencies": {
         "node-static": "*",
-        "smushers": ">= 0.5.0"
+        "smushers": ">= 0.5.1"
     }
 }
