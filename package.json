@@ -17,20 +17,24 @@
         "url": "https://github.com/wtff0nzie/simpl3s"
     },
     "license": "MIT",
-    "readmeFilename": "readme.md",
+    "readmeFilename": "Readme.md",
     "bugs": {
         "url": "https://github.com/wtff0nzie/simpl3s/issues"
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
-    "version": "2.0.6",
+    "version": "2.1.0",
     "engines": {
         "node": ">= 6"
     },
     "files": [
-        "index.js"
+        "LICENSE.md",
+        "Readme.md",
+        "index.js",
+        "lib/"
     ],
+    "main": "index.js",
     "dependencies": {
         "node-static": "*",
-        "smushers": ">= 0.5.3"
+        "smushers": ">= 0.5.96"
     }
 }
