@@ -22,7 +22,7 @@
         "url": "https://github.com/wtff0nzie/simpl3s/issues"
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
-    "version": "2.1.7",
+    "version": "2.1.8",
     "engines": {
         "node": "8.1.2"
     },
