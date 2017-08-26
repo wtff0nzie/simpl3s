@@ -22,9 +22,9 @@
         "url": "https://github.com/wtff0nzie/simpl3s/issues"
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
-    "version": "2.1.9",
+    "version": "2.1.91",
     "engines": {
-        "node": "8.1.2"
+        "node": "8.4"
     },
     "files": [
         "LICENSE.md",
@@ -35,6 +35,6 @@
     "main": "index.js",
     "dependencies": {
         "node-static": "*",
-        "smushers": "0.5.993"
+        "smushers": "0.5.994"
     }
 }
