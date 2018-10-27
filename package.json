@@ -22,7 +22,7 @@
         "url": "https://github.com/wtff0nzie/simpl3s/issues"
     },
     "homepage": "https://github.com/wtff0nzie/simpl3s",
-    "version": "2.1.94",
+    "version": "2.1.95",
     "engines": {
         "node": "11.0.0"
     },
@@ -34,7 +34,7 @@
     ],
     "main": "index.js",
     "dependencies": {
-        "node-static": "*",
+        "node-static": "0.7.11",
         "smushers": "0.5.994"
     }
 }
