@@ -19,19 +19,22 @@ simp.setConfig({
 });
 console.log('Config (change path)', simp.getConfig());
 
-/*
+
 // Demonstrate stand alone warning
 
 simp.standAloneServer({
     gzip    : true,
     minify  : true
 });
-*/
 
+
+/*
 // Demonstrate single file serving
 require('http')
     .createServer(simp.serveFile)
     .listen(8080);
+*/
+
 
 console.log('Config (post run)', simp.getConfig());
 
