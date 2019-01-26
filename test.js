@@ -30,10 +30,7 @@ simp.standAloneServer({
 
 // Demonstrate single file serving
 require('http')
-    .createServer((req, res) => {
-        console.log(`Attempting to serve ${req.url}`);
-        simp.serveFile(req, res);
-    })
+    .createServer(simp.serveFile)
     .listen(8080);
 
 console.log('Config (post run)', simp.getConfig());

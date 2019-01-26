@@ -10,33 +10,51 @@ Small, fast, quick and easy node.js file flinger with a silly name.
 * Silly name
 
 ## Quick usage
-    require('simpl3s').server();
+    require('simpl3s').standAloneServer({});
 
 
 ## Sample configuration
-    var simpl3s = require('simpl3s'),
+    const simpl3s = require('simpl3s'),
         config = {
-            gzip: true,
-            port: 8081,
-            path: './public'
+            gzip    : true,
+            minify  : true,
+            port    : 8081,
+            path    : './public'
         };
 
-    simpl3s.server(config);
+    simpl3s.standAloneServer(config);
+
+
+## Complete configuration
+    const simpl3s = require('simpl3s'),
+        config = {
+            etag        : false,
+            gzip        : false,
+            immutable   : true,
+            maxAge      : 181635468200,
+            minify      : false,
+            path        : './www',
+            port        : 8080
+        };
+
+    simpl3s.standAloneServer(config);
 
 
 ## Serve a single file
-    var simpl3s = require('simpl3s');
+    const simpl3s = require('simpl3s');
 
-    simpl3s.serveFile(req, res);
+    require('http')
+        .createServer(simpl3s.serveFile)
+        .listen(8080);
 
 
 ## Just optimise static assets
 
-    require('simpl3s').speedify('./public');
+    require('simpl3s').speedify({}, './public');
 
 
 ## Notes
-Explicit port configuration will be ignored if a cloud environment is detected. Defaults to 8081 when no port is specified.
+Explicit port configuration will be ignored if a cloud environment is detected. Defaults to 8080 when no port is specified.
 
 ## Installation
 
