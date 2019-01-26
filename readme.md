@@ -10,7 +10,7 @@ Small, fast, quick and easy node.js file flinger with a silly name.
 * Silly name
 
 ## Quick usage
-    require('simpl3s').standAloneServer({});
+    require('simpl3s').standAloneServer();
 
 
 ## Sample configuration
@@ -28,11 +28,11 @@ Small, fast, quick and easy node.js file flinger with a silly name.
 ## Complete configuration
     const simpl3s = require('simpl3s'),
         config = {
-            etag        : false,
-            gzip        : false,
+            etag        : true,
+            gzip        : true,
             immutable   : true,
             maxAge      : 181635468200,
-            minify      : false,
+            minify      : true,
             path        : './www',
             port        : 8080
         };
@@ -41,9 +41,10 @@ Small, fast, quick and easy node.js file flinger with a silly name.
 
 
 ## Serve a single file
-    const simpl3s = require('simpl3s');
+    const simpl3s = require('simpl3s'),
+        server = require('http'); 
 
-    require('http')
+    server
         .createServer(simpl3s.serveFile)
         .listen(8080);
 
