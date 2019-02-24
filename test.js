@@ -36,8 +36,7 @@ require('http')
 */
 
 
-console.log('Config (post run)', simp.getConfig());
-
+simp.speedify();
 
 setInterval(() => {
     console.log('Stats', simp.getStats());
