@@ -35,7 +35,7 @@
     "main": "index.js",
     "dependencies": {
         "mime-types": "2.1.24",
-        "serve-static": "1.14.1",
+        "serve-static": "1.16.0",
         "smushers": "0.6.1"
     }
 }
